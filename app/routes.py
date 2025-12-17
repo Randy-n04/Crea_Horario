@@ -117,6 +117,39 @@ def eliminar_clase(indice):
         'horario': horario.to_dict()
     })
 
+@bp.route('/api/clases/<int:indice>', methods=['PUT'])
+def actualizar_clase(indice):
+    """
+    API: Actualiza una clase existente (principalmente para cambiar color).
+    """
+    horario = obtener_horario()
+    
+    if indice < 0 or indice >= len(horario.clases):
+        return jsonify({
+            'success': False,
+            'message': ' Índice de clase inválido'
+        }), 400
+    
+    try:
+        data = request.get_json()
+        
+        # Actualizar solo el color (podemos expandir esto después)
+        if 'color' in data:
+            horario.clases[indice].color = data['color']
+        
+        return jsonify({
+            'success': True,
+            'message': ' Clase actualizada correctamente',
+            'horario': horario.to_dict()
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'message': f' Error al actualizar: {str(e)}'
+        }), 500
+
+
 @bp.route('/api/reset', methods=['POST'])
 def resetear_horario():
     """

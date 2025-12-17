@@ -76,10 +76,14 @@ class Horario:
         "#F87171",  # Rojo
         "#FBBF24",  # Amarillo
         "#A78BFA",  # Púrpura
-        "#FB923C",  # Naranja            "#EC4899",  # Rosa
+        "#FB923C",  # Naranja            
+        "#EC4899",  # Rosa
         "#14B8A6",  # Turquesa
-        "#6EE7B7",  # Verde menta
-        "#92400E",  # Cafe oscuro
+        "#AA653B",  # Cafe oscuro
+        "#4f4dc2ff", # Azul Violeta
+        "#AA653B",   # Cafe
+        "#a5a5a5ff", # Gris
+        "#8a3636ff", # Vino
         ]
 
     def agregar_clase(self, clase):

@@ -17,6 +17,24 @@ function horarioApp() {
         },
         cargando: false,
         diasSemana: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'],
+        
+        modalAbierto: false,
+        claseSeleccionada: null,
+        indiceClaseSeleccionada: -1,
+        coloresDisponibles: [
+            { nombre: 'Azul', hex: '#60A5FA' },
+            { nombre: 'Verde', hex: '#34D399' },
+            { nombre: 'Rojo', hex: '#F87171' },
+            { nombre: 'Amarillo', hex: '#FBBF24' },
+            { nombre: 'Púrpura', hex: '#A78BFA' },
+            { nombre: 'Naranja', hex: '#FB923C' },
+            { nombre: 'Rosa', hex: '#EC4899' },
+            { nombre: 'Turquesa', hex: '#14B8A6' },
+            { nombre: 'AzulVioleta', hex: '#4f4dc2ff'},
+            { nombre: 'Cafe', hex: '#AA653B'},
+            { nombre: 'Gris', hex: '#a5a5a5ff'},
+            { nombre: 'Vino', hex: '#8a3636ff'},
+        ],
 
         // ==================== MÉTODOS DE CARGA ====================
 
@@ -147,15 +165,96 @@ function horarioApp() {
         },
 
         mostrarDetalles(clase) {
-            alert(`
-            📚 ${clase.nombre}
-            👨‍🏫 Profesor: ${clase.profesor}
-            📅 Días: ${clase.dias.join(', ')}
-            🕐 Horario: ${clase.hora_inicio} - ${clase.hora_fin}
-            `.trim());
+            // Encontrar el índice de esta clase en el array
+            this.indiceClaseSeleccionada = this.clases.findIndex(c => 
+                c.nombre === clase.nombre && 
+                c.profesor === clase.profesor && 
+                c.hora_inicio === clase.hora_inicio
+            );
+            
+            this.claseSeleccionada = { ...clase }; // Clonar el objeto
+            this.modalAbierto = true;
+        },
+
+        mostrarDetallesConIndice(clase, dia, hora) {
+            // Comparamos TODOS los atributos para encontrar la clase correcta
+            this.indiceClaseSeleccionada = this.clases.findIndex(c => 
+                c.nombre === clase.nombre && 
+                c.profesor === clase.profesor && 
+                c.hora_inicio === clase.hora_inicio &&
+                c.hora_fin === clase.hora_fin &&
+                c.dias.join(',') === clase.dias.join(',') && // Comparar días exactos
+                c.color === clase.color
+            );
+            
+            if (this.indiceClaseSeleccionada === -1) {
+                console.error('No se encontró la clase en el array principal');
+                this.mostrarMensaje(' Error al abrir clase', 'error');
+                return;
+            }
+            
+            // Clonar el objeto para el modal
+            this.claseSeleccionada = { ...clase };
+            this.modalAbierto = true;
+            
+            console.log(`Modal abierto para clase índice: ${this.indiceClaseSeleccionada}`, clase);
+        },
+
+        cerrarModal() {
+            this.modalAbierto = false;
+            this.claseSeleccionada = null;
+            this.indiceClaseSeleccionada = -1;
         },
 
         // ==================== MÉTODOS DE HORARIO VISUAL ====================
+
+        async cambiarColorClase(nuevoColor) {
+            if (this.indiceClaseSeleccionada === -1) {
+                this.mostrarMensaje(' No hay clase seleccionada', 'error');
+                return;
+            }
+            
+            try {
+                // Actualizar en el backend
+                const response = await fetch(`/api/clases/${this.indiceClaseSeleccionada}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        color: nuevoColor
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Actualizar localmente
+                    this.clases = data.horario.clases;
+                    this.claseSeleccionada.color = nuevoColor;
+                    
+                    this.mostrarMensaje(' Color actualizado', 'success');
+                } else {
+                    this.mostrarMensaje(data.message, 'error');
+                }
+                
+            } catch (error) {
+                console.error('Error al cambiar color:', error);
+                this.mostrarMensaje(' Error al cambiar color', 'error');
+            }
+        },
+
+        async eliminarClaseDesdeModal() {
+            if (this.indiceClaseSeleccionada === -1) return;
+            
+            if (!confirm('¿Estás seguro de eliminar esta clase?')) {
+                return;
+            }
+            
+            await this.eliminarClase(this.indiceClaseSeleccionada);
+            this.cerrarModal();
+        },
+
 
         /**
          * Calcula las horas visibles según las clases agregadas
@@ -237,6 +336,8 @@ function horarioApp() {
             // 80px por hora (altura de cada celda)
             return horas * 80;
         },
+
+
 
         // ==================== MÉTODOS DE EXPORTACIÓN ====================
 
