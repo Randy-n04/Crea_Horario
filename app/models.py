@@ -92,7 +92,7 @@ class Horario:
         Checks if the time is available (Que si choca, no supe como traducir)
         Returns a dictionary made of a bool success and a string message
         """
-        if len(self.clases) >= 10:
+        if len(self.clases) >= 12:
             return {
                 "success": False,
                 "message": 'Haz Alcanzado el limite de clases'
@@ -118,8 +118,6 @@ class Horario:
     def eliminar_clase(self, index):
         if 0 <= index < len(self.clases):
             self.clases.pop(index)
-            for i, clase in enumerate(self.clases):
-                clase.color = self.colores_disponibles[i]
 
     def obtener_clase_por_dia(self, dia):
         return [clase for clase in self.clases if dia in clase.dias]

@@ -86,9 +86,6 @@ function horarioApp() {
         },
 
         async eliminarClase(indice) {
-            if (!confirm('¿Estás seguro de eliminar esta clase?')) {
-                return;
-            }
 
             try {
                 const response = await fetch(`/api/clases/${indice}`, {
@@ -246,10 +243,6 @@ function horarioApp() {
 
         async eliminarClaseDesdeModal() {
             if (this.indiceClaseSeleccionada === -1) return;
-            
-            if (!confirm('¿Estás seguro de eliminar esta clase?')) {
-                return;
-            }
             
             await this.eliminarClase(this.indiceClaseSeleccionada);
             this.cerrarModal();
