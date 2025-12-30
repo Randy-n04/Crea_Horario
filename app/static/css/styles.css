@@ -1,39 +1,41 @@
-
-/* Estilos generales */
-body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+/* ==================== VARIABLES Y GENERALES ==================== */
+:root {
+    --color-primary: #3b82f6;
+    --color-secondary: #6b7280;
+    --color-success: #10b981;
+    --color-danger: #ef4444;
+    --color-warning: #fbbf24;
+    --border-radius: 6px;
+    --transition: all 0.2s ease;
 }
 
-/* Contenedor del horario - Grid principal */
+body {
+    font-family: 'Inter', 'Segoe UI', -apple-system, sans-serif;
+}
+
+
+/* ==================== GRID DEL HORARIO ==================== */
 .horario-grid {
     display: grid;
-    grid-template-columns: 70px repeat(5, minmax(120px, 1fr)); /* 80px para hora + 5 columnas iguales para días */
+    grid-template-columns: 70px repeat(5, minmax(120px, 1fr));
     gap: 1px;
     background-color: #e5e7eb;
     border: 1px solid #e5e7eb;
-    min-width: 100%;
     width: 100%;
 }
 
-.horario-celda,
-.horario-hora {
+.horario-celda, .horario-hora {
     min-height: 80px;
     height: 80px;
-    min-width: 0; /* Permitir que se comprima si es necesario */
-
     opacity: 1 !important;
 }
 
-/* Celdas del horario */
 .horario-celda {
     background-color: white;
-    min-height: 80px;
-    height: 80px;
     padding: 8px;
     position: relative;
 }
 
-/* Celda de hora (primera columna) */
 .horario-hora {
     background-color: #dfe2e6;
     font-weight: 600;
@@ -43,44 +45,32 @@ body {
     align-items: center;
     justify-content: center;
     border-right: 2px solid #e5e7eb;
-    min-height: 80px;
-    height: 80px;
 }
 
-/* Encabezado de días */
 .horario-header {
-    background-color: #dfe2e6 ;
-    color: #556477 ;
+    background-color: #dfe2e6;
+    color: #556477;
     font-weight: 700;
     padding: 10px 6px;
     text-align: center;
     font-size: 0.9rem;
-
     opacity: 1 !important;
 }
 
 #horario-container {
     overflow-x: auto;
     max-width: 100%;
-    width: 100%;
     background-color: white;
     padding: 1rem;
     border-radius: 8px;
 }
 
-.clase-bloque:hover .clase-nombre {
-    white-space: normal;
-    overflow: visible;
-    word-break: break-word;
-}
-
-
-/* Clase dentro del horario */
+/* ==================== BLOQUES DE CLASE ==================== */
 .clase-bloque {
     position: absolute;
     left: 4px;
     right: 4px;
-    border-radius: 6px;
+    border-radius: var(--border-radius);
     padding: 8px;
     color: white;
     font-size: 0.875rem;
@@ -88,11 +78,9 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-
+    transition: var(--transition);
     z-index: 10;
     border-left: 4px solid rgba(0, 0, 0, 0.2);
-
     opacity: 1 !important;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
@@ -104,30 +92,23 @@ body {
     overflow: visible;
 }
 
-/* Nombre de la clase dentro del bloque */
 .clase-nombre {
     font-size: 0.875rem;
     font-weight: 700;
     margin-bottom: 2px;
     line-height: 1.2;
-
     overflow: visible;
-    text-overflow: unset;
-    white-space: normal;
     word-break: break-word;
-    max-width: 100%;
-
+    white-space: normal;
     opacity: 1 !important;
 }
 
-
-/* Hora de la clase dentro del bloque */
 .clase-hora {
     font-size: 0.75rem;
     opacity: 0.9;
 }
 
-/* Formulario de agregar clase */
+/* ==================== FORMULARIOS ==================== */
 .form-group {
     margin-bottom: 1rem;
 }
@@ -140,39 +121,26 @@ body {
     font-size: 0.875rem;
 }
 
-.form-input {
+.form-input, input[type="time"] {
     width: 100%;
     padding: 0.625rem;
     border: 1px solid #d1d5db;
-    border-radius: 6px;
+    border-radius: var(--border-radius);
     font-size: 0.875rem;
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.form-input:focus {
+.form-input:focus, input[type="time"]:focus {
     outline: none;
-    border-color: #3b82f6;
+    border-color: var(--color-primary);
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-/* Checkboxes de días */
+/* ==================== DÍAS DE LA SEMANA ==================== */
 .dias-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 0.5rem;
-    width: 100%;
-
-}
-@media (max-width: 768px) {
-    .dias-grid {
-        grid-template-columns: repeat(3, 1fr); /* 3 columnas en tablets */
-    }
-}
-
-@media (max-width: 480px) {
-    .dias-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 columnas en móviles */
-    }
 }
 
 .dia-checkbox {
@@ -180,18 +148,14 @@ body {
     align-items: center;
     padding: 0.5rem;
     border: 2px solid #e5e7eb;
-    border-radius: 6px;
+    border-radius: var(--border-radius);
     cursor: pointer;
-    transition: all 0.2s;
+    transition: var(--transition);
     font-size: 0.875rem;
-
-    box-sizing: border-box;
-    min-width: 0;
-    overflow: hidden;
 }
 
 .dia-checkbox:hover {
-    border-color: #3b82f6;
+    border-color: var(--color-primary);
     background-color: #eff6ff;
 }
 
@@ -204,14 +168,14 @@ body {
     margin-right: 0.5rem;
 }
 
-/* Botones */
+/* ==================== BOTONES ==================== */
 .btn {
     padding: 0.625rem 1.25rem;
-    border-radius: 6px;
+    border-radius: var(--border-radius);
     font-weight: 600;
     font-size: 0.875rem;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: var(--transition);
     border: none;
     display: inline-flex;
     align-items: center;
@@ -219,7 +183,7 @@ body {
 }
 
 .btn-primary {
-    background-color: #3b82f6;
+    background-color: var(--color-primary);
     color: white;
 }
 
@@ -230,7 +194,7 @@ body {
 }
 
 .btn-secondary {
-    background-color: #6b7280;
+    background-color: var(--color-secondary);
     color: white;
 }
 
@@ -239,7 +203,7 @@ body {
 }
 
 .btn-danger {
-    background-color: #ef4444;
+    background-color: var(--color-danger);
     color: white;
 }
 
@@ -248,7 +212,7 @@ body {
 }
 
 .btn-success {
-    background-color: #10b981;
+    background-color: var(--color-success);
     color: white;
 }
 
@@ -256,50 +220,15 @@ body {
     background-color: #059669;
 }
 
-/* Lista de clases agregadas */
-.clase-item {
-    padding: 1rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 6px;
-    margin-bottom: 0.75rem;
-    background-color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: box-shadow 0.2s;
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
 }
 
-.clase-item:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.clase-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.clase-info h4 {
-    font-weight: 700;
-    color: #1f2937;
-    margin-bottom: 0.25rem;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: normal;
-}
-
-.clase-info p {
-    font-size: 0.875rem;
-    color: #6b7280;
-    margin: 0;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: normal;
-}
-
-/* Alertas/Mensajes */
+/* ==================== ALERTAS ==================== */
 .alert {
     padding: 1rem;
-    border-radius: 6px;
+    border-radius: var(--border-radius);
     margin-bottom: 1rem;
     font-weight: 500;
     display: flex;
@@ -325,7 +254,7 @@ body {
     border: 1px solid #fcd34d;
 }
 
-/* Lista de profesores */
+/* ==================== LISTA DE PROFESORES ==================== */
 .profesores-lista {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -336,27 +265,98 @@ body {
 .profesor-item {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem;
+    gap: 0.75rem;
+    padding: 0.75rem;
     background-color: #f9fafb;
-    border-radius: 6px;
+    border-radius: var(--border-radius);
     font-size: 0.875rem;
+    border: 1px solid #e5e7eb;
 }
 
 .profesor-color {
-    width: 16px;
-    height: 16px;
-    border-radius: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
     flex-shrink: 0;
 }
 
-/* Estilos responsive */
+/* ==================== MODAL ==================== */
+.z-50 {
+    z-index: 50;
+}
+
+body:has([x-show="modalAbierto"][style*="display: block"]) {
+    overflow: hidden;
+}
+
+.bg-opacity-50 {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.ring-4 {
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ==================== HEADER Y DROPDOWN ==================== */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+}
+
+.dropdown-menu {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu button:hover {
+    background-color: #f3f4f6;
+    transition: background-color 0.15s ease;
+}
+
+.dropdown-menu .text-gray-500 {
+    pointer-events: none;
+}
+
+.border-t {
+    margin: 0.25rem 0;
+}
+
+/* ==================== UTILIDADES ==================== */
+.spinner {
+    border: 3px solid #f3f4f6;
+    border-top: 3px solid var(--color-primary);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 0.8s linear infinite;
+    display: inline-block;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+.print-only {
+    display: none;
+}
+
+@media print {
+    .print-only {
+        display: block;
+    }
+}
+
+/* ==================== RESPONSIVE ==================== */
 @media (max-width: 1024px) {
     .horario-grid {
         grid-template-columns: 60px repeat(5, minmax(100px, 1fr));
         font-size: 0.8rem;
-
-        opacity: 1 !important;
     }
 
     .horario-header {
@@ -372,186 +372,16 @@ body {
 
 @media (max-width: 768px) {
     .horario-grid {
-        grid-template-columns: 50px repeat(3, 1fr); /* Mostrar solo 3 días en móvil */
+        grid-template-columns: 50px repeat(3, 1fr);
     }
 
     .dias-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .dias-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-}
-
-/* Animaciones
-
-Desafortunadamente esta animación rompe la exportacion a pdf, asi
-que se tuvo que eliminar
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.clase-bloque {
-    animation: slideIn 0.3s ease-out;
-}
-*/
-/* Loading spinner */
-.spinner {
-    border: 3px solid #f3f4f6;
-    border-top: 3px solid #3b82f6;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    animation: spin 0.8s linear infinite;
-    display: inline-block;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Estilos para inputs de hora */
-input[type="time"] {
-    padding: 0.625rem;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    font-size: 0.875rem;
-}
-
-input[type="time"]:focus {
-    outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    backdrop-filter: blur(10px);
-}
-
-/* Dropdown menu mejorado */
-.dropdown-menu {
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-/* Hover effect para items del dropdown */
-button:hover {
-    transition: all 0.2s ease;
-}
-
-.dropdown-menu button:hover {
-    background-color: #f3f4f6;
-    transition: background-color 0.15s ease;
-}
-
-/* Icono del botón de tema deshabilitado */
-button:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-}
-
-/* Secciones del menú */
-.dropdown-menu .text-gray-500 {
-    pointer-events: none;
-}
-
-/* Separador */
-.border-t {
-    margin: 0.25rem 0;
-}
-
-
-/* Animación suave para el dropdown */
-[x-cloak] {
-    display: none !important;
-}
-
-/* Estilos para exportación */
-.print-only {
-    display: none; /* Oculto por defecto */
-}
-
-/* Cuando se está capturando para imagen/PDF, mostrarlo */
-@media print {
-    .print-only {
-        display: block;
-    }
-}
-
-/* Contenedor para exportación completa */
-#horario-exportable {
-    width: 100%;
-    display: contents;
-}
-
-/* Asegurar que la sección de profesores se vea bien en exportación */
-.profesores-seccion {
-    padding: 1rem;
-    background-color: #f9fafb;
-    border-radius: 8px;
-    margin-top: 1.5rem;
-}
-
-.profesores-seccion h3 {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #374151;
-    margin-bottom: 0.75rem;
-}
-
-/* Mejorar el grid de profesores para exportación */
-.profesores-lista {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 0.75rem;
-}
-
-.profesor-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem;
-    background-color: white;
-    border-radius: 6px;
-    font-size: 0.875rem;
-    border: 1px solid #e5e7eb;
-}
-
-.profesor-color {
-    width: 20px;
-    height: 20px;
-    border-radius: 4px;
-    flex-shrink: 0;
-}
-
-/* ========================================
-   ESTILOS PARA EL MODAL
-   ======================================== */
-
-/* Asegurar que el modal esté por encima de todo */
-.z-50 {
-    z-index: 50;
-}
-
-/* Prevenir scroll del body cuando el modal está abierto */
-body:has([x-show="modalAbierto"][style*="display: block"]) {
-    overflow: hidden;
-}
-
-/* Animación suave para el overlay */
-.bg-opacity-50 {
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-/* Estilo del selector de color cuando está seleccionado */
-.ring-4 {
-    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1);
 }
