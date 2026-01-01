@@ -41,13 +41,13 @@ function horarioApp() {
                 this.clases = data.clases;
             } catch (error) {
                 console.error('Error al cargar clases:', error);
-                this.mostrarMensaje('❌ Error al cargar clases', 'error');
+                this.mostrarMensaje('Error al cargar clases', 'error');
             }
         },
 
         async agregarClase() {
             if (this.nuevaClase.dias.length === 0) {
-                this.mostrarMensaje('⚠️ Debes seleccionar al menos un día', 'warning');
+                this.mostrarMensaje('Debes seleccionar al menos un día', 'warning');
                 return;
             }
 
@@ -61,7 +61,7 @@ function horarioApp() {
                 this.mostrarMensaje(data.message, data.success ? 'success' : 'error');
             } catch (error) {
                 console.error('Error al agregar clase:', error);
-                this.mostrarMensaje('❌ Error al agregar clase', 'error');
+                this.mostrarMensaje('Error al agregar clase', 'error');
             } finally {
                 this.cargando = false;
             }
@@ -74,7 +74,7 @@ function horarioApp() {
                 this.mostrarMensaje(data.message, 'success');
             } catch (error) {
                 console.error('Error al eliminar clase:', error);
-                this.mostrarMensaje('❌ Error al eliminar clase', 'error');
+                this.mostrarMensaje('Error al eliminar clase', 'error');
             }
         },
 
@@ -83,16 +83,16 @@ function horarioApp() {
             try {
                 await this.apiCall('/api/reset', 'POST');
                 this.clases = [];
-                this.mostrarMensaje('✅ Horario reseteado', 'success');
+                this.mostrarMensaje('Horario reseteado', 'success');
             } catch (error) {
                 console.error('Error al resetear:', error);
-                this.mostrarMensaje('❌ Error al resetear', 'error');
+                this.mostrarMensaje('Error al resetear', 'error');
             }
         },
 
         async cambiarColorClase(nuevoColor) {
             if (this.indiceClaseSeleccionada === -1) {
-                this.mostrarMensaje('❌ No hay clase seleccionada', 'error');
+                this.mostrarMensaje('No hay clase seleccionada', 'error');
                 return;
             }
             try {
@@ -100,13 +100,13 @@ function horarioApp() {
                 if (data.success) {
                     this.clases = data.horario.clases;
                     this.claseSeleccionada.color = nuevoColor;
-                    this.mostrarMensaje('✅ Color actualizado', 'success');
+                    this.mostrarMensaje('Color actualizado', 'success');
                 } else {
                     this.mostrarMensaje(data.message, 'error');
                 }
             } catch (error) {
                 console.error('Error al cambiar color:', error);
-                this.mostrarMensaje('❌ Error al cambiar color', 'error');
+                this.mostrarMensaje('Error al cambiar color', 'error');
             }
         },
 
@@ -146,7 +146,7 @@ function horarioApp() {
             );
             
             if (this.indiceClaseSeleccionada === -1) {
-                this.mostrarMensaje('❌ Error al abrir clase', 'error');
+                this.mostrarMensaje('Error al abrir clase', 'error');
                 return;
             }
             
@@ -270,8 +270,12 @@ function horarioApp() {
                                 bloque.style.height = `${(duracion / 60) * alturaPorHora}px`;
                                 bloque.style.top = minIni > 0 ? `${(minIni / 60) * alturaPorHora}px` : '0px';
                             }
-                            bloque.style.fontSize = '1rem';
-                            bloque.querySelector('.clase-nombre')?.style && (bloque.querySelector('.clase-nombre').style.fontSize = '1.1rem');
+                            
+                            Object.assign(bloque.style, { fontSize: '1.1rem', padding: '14px' });
+                            const nombre = bloque.querySelector('.clase-nombre');
+                            const hora = bloque.querySelector('.clase-hora');
+                            if (nombre) Object.assign(nombre.style, { fontSize: '1.5rem', fontWeight: '800', marginBottom: '8px' });
+                            if (hora) Object.assign(hora.style, { fontSize: '1.2rem', fontWeight: '600' });
                         });
                     }
                 }
@@ -296,7 +300,7 @@ function horarioApp() {
             const esPDF = tipo === 'pdf';
             
             try {
-                this.mostrarMensaje(`⏳ Generando ${tipo.toUpperCase()} ${orientacion}...`, 'warning');
+                this.mostrarMensaje(`Generando ${tipo.toUpperCase()} ${orientacion}...`, 'warning');
                 const canvas = await this.capturarCanvas(esHorizontal);
 
                 if (esPDF) {
@@ -342,10 +346,10 @@ function horarioApp() {
                     }, 'image/png', 1.0);
                 }
 
-                this.mostrarMensaje(`✅ ${tipo.toUpperCase()} ${orientacion} descargado`, 'success');
+                this.mostrarMensaje(`${tipo.toUpperCase()} ${orientacion} descargado`, 'success');
             } catch (error) {
                 console.error(`Error al generar ${tipo}:`, error);
-                this.mostrarMensaje(`❌ Error al generar ${tipo}`, 'error');
+                this.mostrarMensaje(`Error al generar ${tipo}`, 'error');
             }
         },
 
