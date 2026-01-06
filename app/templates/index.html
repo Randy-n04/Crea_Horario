@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../static/img/favicon.png">
     <title>Generador de Horarios Universitarios</title>
 
     <!-- CDN de librerías -->
@@ -27,10 +28,10 @@
         <header class="bg-white rounded-lg shadow-md px-6 py-4 mb-6">
             <div class="flex justify-between items-center">
                 <div class="flex items-center gap-3">
-                    <div class="text-3xl">📅</div>
+                    <img src="../static/img/favicon.png" class="w-16 h-auto">
                     <div>
-                        <h1 class="text-lg font-bold text-gray-800">Mi Horario de Clases</h1>
-                        <p class="text-xs text-gray-500">Organiza tu semana académica</p>
+                        <h1 class="text-lg font-bold text-gray-800">Crea Horario</h1>
+                        <p class="text-xs text-gray-500">Organiza tu horario académico</p>
                     </div>
                 </div>
 
@@ -116,16 +117,9 @@
 
             <!-- Formulario -->
             <div class="lg:col-span-1">
+
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 text-gray-800">Agregar Clase</h2>
-
-                    <!-- Alerta -->
-                    <div x-show="mensaje.texto"
-                         :class="{ 'alert-success': mensaje.tipo === 'success', 'alert-error': mensaje.tipo === 'error', 'alert-warning': mensaje.tipo === 'warning' }"
-                         class="alert" x-transition>
-                        <span x-text="mensaje.texto"></span>
-                    </div>
-
                     <!-- Form -->
                     <form @submit.prevent="agregarClase()">
                         <div class="form-group">
@@ -170,6 +164,14 @@
                         </div>
                     </form>
                 </div>
+
+                <!-- Alerta -->
+                <div x-show="mensaje.texto"
+                        :class="{ 'alert-success': mensaje.tipo === 'success', 'alert-error': mensaje.tipo === 'error', 'alert-warning': mensaje.tipo === 'warning' }"
+                        class="alert mt-4 font-inter" x-transition>
+                    <span x-text="mensaje.texto"></span>
+                </div>
+
             </div>
 
             <!-- Horario -->
@@ -217,7 +219,7 @@
                     <div x-show="clases.length === 0" class="text-center py-12 text-gray-500">
                         <div class="text-6xl mb-4">📝</div>
                         <p class="text-lg">No hay clases agregadas</p>
-                        <p class="text-sm">Agrega tu primera clase usando el formulario</p>
+                        <p class="text-sm">Agrega tu primera clase usando la pestaña de la izquierda</p>
                     </div>
 
                     <!-- Profesores -->
