@@ -37,7 +37,7 @@
 
                 <div class="flex items-center gap-3">
                     <!-- Botón de tema (placeholder) -->
-                    <button class="p-2 rounded-lg hover:bg-gray-100 transition-colors" title="Cambiar tema" disabled>
+                    <button @click="toggleModoOscuro()" class="p-2 rounded-lg hover:bg-gray-100 transition-colors" title="Cambiar tema">
                         <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
                         </svg>
@@ -129,7 +129,7 @@
 
                         <div class="form-group">
                             <label class="form-label">Profesor</label>
-                            <input type="text" x-model="nuevaClase.profesor" class="form-input" placeholder="Ej: Omar Dengo" required>
+                            <input type="text" x-model="nuevaClase.profesor" class="form-input" placeholder="Ej: Dr. Juan Pérez" required>
                         </div>
 
                         <div class="form-group">
@@ -197,7 +197,7 @@
                                 <div style="display: contents;">
                                     <div class="horario-hora" x-text="hora"></div>
 
-                                    <!-- ⭐ OPTIMIZACIÓN: Un solo x-for para todos los días -->
+                                    <!-- Un solo x-for para todos los días -->
                                     <template x-for="dia in diasSemana" :key="`${dia}-${hora}`">
                                         <div class="horario-celda" :id="`celda-${dia}-${hora}`">
                                             <template x-for="(clase, idx) in obtenerClaseEnCelda(dia, hora)" :key="idx">

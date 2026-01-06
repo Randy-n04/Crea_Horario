@@ -1,5 +1,10 @@
 // app/static/js/horario.js
-
+document.addEventListener('alpine:init', () => {
+        if (localStorage.theme === 'dark') {
+            document.documentElement.classList.add('dark');
+        }
+    });
+    
 function horarioApp() {
     return {
         // ==================== DATOS ====================
@@ -11,6 +16,7 @@ function horarioApp() {
         modalAbierto: false,
         claseSeleccionada: null,
         indiceClaseSeleccionada: -1,
+        modoOscuro: localStorage.theme === 'dark', 
         coloresDisponibles: [
             { nombre: 'Azul', hex: '#60A5FA' },
             { nombre: 'Verde', hex: '#34D399' },
@@ -361,6 +367,12 @@ function horarioApp() {
         obtenerFechaActual() {
             const fecha = new Date();
             return `${fecha.getFullYear()}-${String(fecha.getMonth() + 1).padStart(2, '0')}-${String(fecha.getDate()).padStart(2, '0')}`;
+        },
+
+        toggleModoOscuro() {
+            this.modoOscuro = !this.modoOscuro;
+            document.documentElement.classList.toggle('dark');
+            localStorage.theme = this.modoOscuro ? 'dark' : 'light';
         }
     }
 }

@@ -402,3 +402,72 @@ header {
 .menu-item:hover {
     background-color: #f3f4f6;
 }
+
+/* =============  Colores del Modo Oscuro  =============== */
+.dark {
+   --color-primary: #3b82f6;
+    --color-secondary: #6b7280;
+    --color-success: #10b981;
+    --color-danger: #ef4444;
+    --color-warning: #fbbf24;
+}
+
+.dark body {
+    background-color: #111827;
+    color: #f9fafb;
+}
+.dark .bg-white {
+    background-color: #1f2937;
+}
+
+.dark .text-gray-800 {
+    color: #f9fafb;
+}
+
+.dark .horario-celda,
+.dark #horario-container,
+.dark .profesor-item {
+    background-color: #1f2937;
+}
+
+.dark .horario-hora,
+.dark .horario-header {
+    background-color: #374151;
+    color: #d1d5db;
+    border-color: #4b5563;
+}
+
+.dark .horario-grid {
+    background-color: #4b5563;
+    border-color: #4b5563;
+}
+
+.dark .form-input,
+.dark input[type="time"] {
+    background-color: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+}
+
+.dark .form-label {
+    color: #d1d5db;
+}
+
+.dark .dia-checkbox {
+    border-color: #4b5563;
+    background-color: #1f2937;
+}
+
+.dark .dia-checkbox:hover {
+    background-color: #374151;
+}
+
+.dark .dropdown-menu,
+.dark .menu-item {
+    background-color: #1f2937;
+    color: #f9fafb;
+}
+
+.dark .menu-item:hover {
+    background-color: #374151;
+}
