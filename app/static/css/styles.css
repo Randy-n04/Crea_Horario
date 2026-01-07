@@ -22,6 +22,7 @@ body {
     background-color: #e5e7eb;
     border: 1px solid #e5e7eb;
     width: 100%;
+    border-radius: 8px; /* Agregar estas línea */
 }
 
 .horario-celda, .horario-hora {
@@ -60,8 +61,8 @@ body {
 #horario-container {
     overflow-x: auto;
     max-width: 100%;
-    background-color: white;
-    padding: 1rem;
+    background-color: transparent;
+    padding: 0rem;
     border-radius: 8px;
 }
 
@@ -355,7 +356,7 @@ header {
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 1024px) {
     .horario-grid {
-        grid-template-columns: 60px repeat(5, minmax(100px, 1fr));
+        grid-template-columns: 60px repeat(5, minmax(120px, 1fr));
         font-size: 0.8rem;
     }
 
@@ -366,13 +367,33 @@ header {
 
     .clase-bloque {
         font-size: 0.75rem;
-        padding: 4px;
+        padding: 6px;
     }
 }
 
 @media (max-width: 768px) {
+    #horario-container {
+        padding: 0.5rem;
+        -webkit-overflow-scrolling: touch;
+    }
+
     .horario-grid {
-        grid-template-columns: 50px repeat(3, 1fr);
+        grid-template-columns: 50px repeat(5, 130px); 
+    }
+
+    .horario-header {
+        font-size: 0.7rem;  
+        padding: 6px 2px;   
+    }
+
+    .horario-celda, .horario-hora {
+        min-height: 70px;
+        height: 70px;
+    }
+
+    .clase-bloque {
+        font-size: 0.7rem;
+        padding: 4px;
     }
 
     .dias-grid {
@@ -381,6 +402,15 @@ header {
 }
 
 @media (max-width: 480px) {
+    .horario-grid {
+        grid-template-columns: 45px repeat(5, 120px);
+    }
+
+    .horario-celda, .horario-hora {
+        min-height: 60px;
+        height: 60px;
+    }
+
     .dias-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -420,7 +450,8 @@ header {
     background-color: #1f2937;
 }
 
-.dark .text-gray-800 {
+.dark .text-gray-800,
+.dark .text-gray-700{
     color: #f9fafb;
 }
 
@@ -449,7 +480,7 @@ header {
     color: #f9fafb;
 }
 
-.dark .form-label {
+.dark .form-label{
     color: #d1d5db;
 }
 
@@ -470,4 +501,8 @@ header {
 
 .dark .menu-item:hover {
     background-color: #374151;
+}
+
+.dark .bg-gray-200 {
+    color: #535353;
 }

@@ -4,7 +4,7 @@ document.addEventListener('alpine:init', () => {
             document.documentElement.classList.add('dark');
         }
     });
-    
+
 function horarioApp() {
     return {
         // ==================== DATOS ====================
@@ -219,6 +219,9 @@ function horarioApp() {
 
             await new Promise(resolve => setTimeout(resolve, optimizado ? 500 : 300));
 
+            // Detectar si estamos en móvil
+            const esMovil = window.innerWidth <= 768;
+
             const config = {
                 scale: 3,
                 backgroundColor: '#ffffff',
@@ -233,12 +236,30 @@ function horarioApp() {
                     if (!target) return;
 
                     target.style.opacity = '1';
+                    
+                    // Forzar background correcto SOLO en vertical
+                    if (!optimizado) {
+                        const isDark = document.documentElement.classList.contains('dark');
+                        target.style.backgroundColor = isDark ? '#1f2937' : '#ffffff';
+                    }
+                    
                     target.querySelectorAll('.clase-bloque').forEach(bloque => {
                         bloque.style.opacity = '1';
                         bloque.style.animation = 'none';
                         bloque.style.transform = 'none';
                         bloque.style.backgroundColor = window.getComputedStyle(bloque).backgroundColor;
                     });
+
+                    // Si es móvil y vertical, forzar grid completo
+                    if (esMovil && !optimizado) {
+                        const gridInClone = target.classList.contains('horario-grid') ? target : target.querySelector('.horario-grid');
+                        if (gridInClone) {
+                            gridInClone.style.gridTemplateColumns = '60px repeat(5, 150px)';
+                            gridInClone.style.width = 'auto';
+                        }
+                        target.style.overflow = 'visible';
+                        target.style.width = 'auto';
+                    }
 
                     if (optimizado) {
                         const horas = this.horasVisibles();
@@ -292,10 +313,23 @@ function horarioApp() {
                 const alturaTotal = 60 + (horas.length * 100);
                 Object.assign(config, { width: 1400, height: alturaTotal, windowWidth: 1400, windowHeight: alturaTotal });
             } else {
-                Object.assign(config, {
-                    windowWidth: elemento.scrollWidth,
-                    windowHeight: elemento.scrollHeight
-                });
+                // Si es móvil, calcular ancho fijo para capturar todos los días
+                if (esMovil) {
+                    const anchoTotal = 810; // Aumentar el ancho: 60 + (5 * 150)
+                    Object.assign(config, {
+                        windowWidth: anchoTotal,
+                        windowHeight: elemento.scrollHeight,
+                        width: anchoTotal,
+                        scrollX: 0,
+                        scrollY: 0
+                    });
+                } else {
+                    // En desktop, usar dimensiones normales
+                    Object.assign(config, {
+                        windowWidth: elemento.scrollWidth,
+                        windowHeight: elemento.scrollHeight
+                    });
+                }
             }
 
             return await html2canvas(elemento, config);
