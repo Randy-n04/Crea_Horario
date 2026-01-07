@@ -372,18 +372,52 @@ header {
 }
 
 @media (max-width: 768px) {
+    header {
+        padding: 0.75rem 1rem !important;
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+        align-items: stretch !important;
+    }
+
+    header > div:first-child {
+        justify-content: center !important;
+    }
+
+    header > div:last-child {
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+        width: 100% !important;
+    }
+
+    header h1 {
+        font-size: 1.1rem !important;
+    }
+
+    header .btn {
+        padding: 0.6rem 1rem !important;
+        font-size: 0.85rem !important;
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    header svg {
+        width: 1rem !important;
+        height: 1rem !important;
+    }
+
     #horario-container {
         padding: 0.5rem;
         -webkit-overflow-scrolling: touch;
     }
 
     .horario-grid {
-        grid-template-columns: 50px repeat(5, 130px); 
+        grid-template-columns: 50px repeat(5, 130px);
+        font-size: 0.75rem;
     }
 
     .horario-header {
-        font-size: 0.7rem;  
-        padding: 6px 2px;   
+        font-size: 0.7rem;
+        padding: 6px 2px;
     }
 
     .horario-celda, .horario-hora {
@@ -394,6 +428,16 @@ header {
     .clase-bloque {
         font-size: 0.7rem;
         padding: 4px;
+        left: 2px;
+        right: 2px;
+    }
+
+    .clase-nombre {
+        font-size: 0.75rem;
+    }
+
+    .clase-hora {
+        font-size: 0.65rem;
     }
 
     .dias-grid {
